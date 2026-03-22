@@ -1,0 +1,144 @@
+.patient-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &.urgence-rouge {
+    border-left: 4px solid #e74c3c;
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.1) 0%, white 20px);
+  }
+
+  &.urgence-orange {
+    border-left: 4px solid #e67e22;
+    background: linear-gradient(90deg, rgba(230, 126, 34, 0.1) 0%, white 20px);
+  }
+
+  &.urgence-jaune {
+    border-left: 4px solid #f39c12;
+    background: linear-gradient(90deg, rgba(243, 156, 18, 0.1) 0%, white 20px);
+  }
+
+  &.urgence-vert {
+    border-left: 4px solid #27ae60;
+    background: linear-gradient(90deg, rgba(39, 174, 96, 0.1) 0%, white 20px);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .patient-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #3498db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 12px;
+  }
+
+  .patient-info {
+    flex: 1;
+
+    h3 {
+      margin: 0 0 4px 0;
+      color: #2c3e50;
+    }
+
+    .age {
+      color: #7f8c8d;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .ins, .ins-masked {
+      font-family: monospace;
+      font-size: 12px;
+      color: #34495e;
+      margin: 2px 0 0 0;
+    }
+  }
+
+  .urgence-badge {
+    .badge-vert { background: #27ae60; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-jaune { background: #f39c12; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-orange { background: #e67e22; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-rouge { background: #e74c3c; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+  }
+}
+
+.card-body {
+  .contact-info {
+    margin-bottom: 8px;
+
+    p {
+      margin: 2px 0;
+      font-size: 14px;
+    }
+  }
+
+  .medical-info {
+    margin-bottom: 8px;
+
+    .allergies-indicator {
+      display: flex;
+      align-items: center;
+      color: #e74c3c;
+      font-weight: bold;
+      font-size: 14px;
+
+      .allergy-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .statut {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+
+    .statut-label {
+      margin-right: 8px;
+    }
+
+    .statut-actif { color: #27ae60; }
+    .statut-inactif { color: #7f8c8d; }
+    .statut-décédé { color: #e74c3c; }
+    .statut-transféré { color: #3498db; }
+  }
+}
+
+.card-actions {
+  margin-top: 12px;
+  text-align: right;
+
+  .btn-urgence {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background: #c0392b;
+    }
+  }
+}

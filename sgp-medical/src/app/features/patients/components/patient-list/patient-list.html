@@ -1,0 +1,52 @@
+<div class="patient-list-container">
+  <div class="header">
+    <h2>Liste des Patients</h2>
+    <div class="actions">
+      <button class="btn-primary" (click)="creerNouveauPatient()">+ Nouveau Patient</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Rechercher par nom, prénom ou INS..."
+        [(ngModel)]="recherche"
+        (input)="onRechercheChange()"
+      >
+    </div>
+
+    <div class="urgency-filter">
+      <select [(ngModel)]="filtreUrgence" (change)="onFiltreUrgenceChange()">
+        <option value="">Tous les niveaux d'urgence</option>
+        <option value="rouge">Urgence Rouge (CCMU 4/5)</option>
+        <option value="orange">Urgence Orange (CCMU 3)</option>
+        <option value="jaune">Urgence Jaune (CCMU 2)</option>
+        <option value="vert">Urgence Verte (CCMU 1)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span>{{ patientsFiltres.length }} patient(s) affiché(s) sur {{ patients.length }} au total</span>
+  </div>
+
+  <div class="patient-grid">
+    <app-patient-card
+      *ngFor="let patient of patientsFiltres; trackBy: trackByPatientId"
+      [patient]="patient"
+      [showSensitiveData]="currentUser.role === 'medecin'"
+      (patientSelected)="onPatientSelectionne($event)"
+      (urgenceSignalee)="onUrgence($event)">
+    </app-patient-card>
+  </div>
+
+  <div class="no-results" *ngIf="patientsFiltres.length === 0 && patients.length > 0">
+    <p>Aucun patient ne correspond aux critères de recherche.</p>
+  </div>
+
+  <div class="empty-state" *ngIf="patients.length === 0">
+    <p>Aucun patient enregistré.</p>
+    <button class="btn-primary">Ajouter le premier patient</button>
+  </div>
+</div>

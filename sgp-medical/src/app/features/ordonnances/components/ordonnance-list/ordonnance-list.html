@@ -1,0 +1,91 @@
+<div class="ordonnance-page">
+  <div class="page-header">
+    <h1>💊 Ordonnances</h1>
+    <p>Gestion des prescriptions médicales</p>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Rechercher par patient ID..."
+        (keyup)="onSearchChange($event)"
+        class="search-input"
+      />
+    </div>
+    <div class="filter-group">
+      <select (change)="onStatutChange($event)" class="filter-select">
+        <option value="">Tous les statuts</option>
+        <option value="en attente">En attente</option>
+        <option value="validée">Validée</option>
+        <option value="exécutée">Exécutée</option>
+        <option value="annulée">Annulée</option>
+      </select>
+    </div>
+    <button class="btn-new">➕ Nouvelle ordonnance</button>
+  </div>
+
+  <div class="ordonnances-list">
+    <div *ngIf="filteredOrdonnances.length === 0" class="empty-state">
+      <p>Aucune ordonnance trouvée</p>
+    </div>
+
+    <div *ngFor="let ordonnance of filteredOrdonnances" class="ordonnance-card">
+      <div class="card-header">
+        <div class="header-info">
+          <h3>Patient: {{ ordonnance.patientId }}</h3>
+          <p class="date">{{ ordonnance.dateOrdonnance | date: 'dd/MM/yyyy' }}</p>
+        </div>
+        <span class="status-badge" [class]="'status-' + ordonnance.statut">
+          {{ ordonnance.statut }}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <div class="medicaments-section">
+          <h4>Médicaments ({{ ordonnance.medicaments.length }})</h4>
+          <div class="medicaments-list">
+            <div *ngFor="let med of ordonnance.medicaments" class="medicament-item">
+              <div class="med-name">{{ med.nom }}</div>
+              <div class="med-details">
+                <span class="dosage">{{ med.dosage }}</span>
+                <span class="frequence">{{ med.frequence }}</span>
+                <span class="duree">{{ med.duree }}</span>
+              </div>
+              <div *ngIf="med.notes" class="med-notes">
+                {{ med.notes }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="observations-section" *ngIf="ordonnance.observations">
+          <h4>Observations</h4>
+          <p>{{ ordonnance.observations }}</p>
+        </div>
+
+        <div class="validity-section">
+          <span class="label">Validité:</span>
+          <span>{{ ordonnance.dureeValidite }} jours</span>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn btn-primary">Voir détails</button>
+        <button class="btn btn-secondary">Modifier</button>
+        <div class="status-actions">
+          <select
+            (change)="changeStatut(ordonnance.id, $event)"
+            class="status-select"
+            [value]="ordonnance.statut"
+          >
+            <option value="en attente">En attente</option>
+            <option value="validée">Validée</option>
+            <option value="exécutée">Exécutée</option>
+            <option value="annulée">Annulée</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

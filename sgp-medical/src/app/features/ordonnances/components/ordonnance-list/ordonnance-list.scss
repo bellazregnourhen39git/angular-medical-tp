@@ -1,0 +1,302 @@
+.ordonnance-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #666;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+
+  .search-box {
+    flex: 1;
+    min-width: 250px;
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+    }
+  }
+
+  .filter-select {
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+  }
+
+  .btn-new {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    }
+  }
+}
+
+.ordonnances-list {
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+}
+
+.ordonnance-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+
+    .header-info {
+      h3 {
+        margin: 0 0 0.25rem 0;
+        font-size: 1.1rem;
+      }
+
+      .date {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+    }
+
+    .status-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+
+      &.status-en\ attente {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+
+      &.status-validée {
+        background: #fff3e0;
+        color: #f57c00;
+      }
+
+      &.status-exécutée {
+        background: #e8f5e9;
+        color: #388e3c;
+      }
+
+      &.status-annulée {
+        background: #ffebee;
+        color: #c62828;
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+
+    .medicaments-section,
+    .observations-section {
+      margin-bottom: 1.5rem;
+
+      h4 {
+        margin: 0 0 0.75rem 0;
+        color: #333;
+        font-size: 1rem;
+      }
+
+      p {
+        margin: 0 0 0.75rem 0;
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+
+    .medicaments-list {
+      .medicament-item {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+
+        .med-name {
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+
+        .med-details {
+          display: flex;
+          gap: 1rem;
+          font-size: 0.9rem;
+          color: #666;
+          margin-bottom: 0.5rem;
+
+          span {
+            padding: 0.25rem 0.5rem;
+            background: white;
+            border-radius: 4px;
+          }
+        }
+
+        .med-notes {
+          font-size: 0.85rem;
+          color: #999;
+          font-style: italic;
+          margin-top: 0.5rem;
+        }
+      }
+    }
+
+    .validity-section {
+      display: flex;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+
+      .label {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.btn-primary {
+        background: #667eea;
+        color: white;
+
+        &:hover {
+          background: darken(#667eea, 10%);
+        }
+      }
+
+      &.btn-secondary {
+        background: #e0e0e0;
+        color: #333;
+
+        &:hover {
+          background: darken(#e0e0e0, 10%);
+        }
+      }
+    }
+
+    .status-actions {
+      margin-left: auto;
+
+      .status-select {
+        padding: 0.5rem 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+          border-color: #667eea;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+
+    .search-box,
+    .filter-select {
+      width: 100%;
+    }
+  }
+
+  .ordonnance-card {
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .card-footer {
+      flex-direction: column;
+      align-items: stretch;
+
+      .btn,
+      .status-select {
+        width: 100%;
+      }
+
+      .status-actions {
+        margin-left: 0;
+      }
+    }
+  }
+}

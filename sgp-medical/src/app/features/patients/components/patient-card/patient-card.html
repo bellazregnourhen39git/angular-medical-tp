@@ -1,0 +1,96 @@
+<div class="patient-card"
+     [class.urgence-rouge]="patient.niveauUrgence === 'rouge'"
+     [class.urgence-orange]="patient.niveauUrgence === 'orange'"
+     [class.urgence-jaune]="patient.niveauUrgence === 'jaune'"
+     [class.urgence-vert]="patient.niveauUrgence === 'vert'"
+     (click)="onPatientClick()">
+
+  <!-- En-tête de la carte -->
+  <div class="card-header">
+    <div class="patient-avatar">
+      <span class="initials">{{ initiales }}</span>
+    </div>
+    <div class="patient-info">
+      <!-- Module 4: Interpolation -->
+      <h3>{{ patient.prenom }} {{ patient.nom }}</h3>
+      <p class="age">{{ age }} ans — {{ patient.sexe }}</p>
+
+      <!-- Module 5: Directive personnalisée SensitiveData (INS) -->
+      <p class="ins">
+        INS :
+        <span [appSensitiveData]="!showSensitiveData"
+              [attr.data-patient-id]="patient.id">
+          {{ patient.ins }}
+        </span>
+      </p>
+    </div>
+
+    <!-- Module 5: ngSwitch pour badge urgence CCMU -->
+    <div class="urgence-badge" *ngIf="patient.niveauUrgence">
+      <span [ngSwitch]="patient.niveauUrgence">
+        <span *ngSwitchCase="'vert'"   class="badge-vert">CCMU 1 – Stable</span>
+        <span *ngSwitchCase="'jaune'"  class="badge-jaune">CCMU 2 – Peu grave</span>
+        <span *ngSwitchCase="'orange'" class="badge-orange">CCMU 3 – Grave</span>
+        <span *ngSwitchCase="'rouge'"  class="badge-rouge">CCMU 4/5 – URGENT</span>
+        <span *ngSwitchDefault         class="badge-gris">Non évalué</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Corps de la carte -->
+  <div class="card-body">
+    <div class="contact-info">
+      <!-- Module 4: Property Binding + Event Binding -->
+      <p><strong>Tél :</strong> {{ patient.telephone }}</p>
+
+      <!-- Module 5: Directive SensitiveData (email) -->
+      <p *ngIf="patient.email">
+        <strong>Email :</strong>
+        <span [appSensitiveData]="!showSensitiveData"
+              [attr.data-patient-id]="patient.id">
+          {{ patient.email }}
+        </span>
+      </p>
+
+      <!-- Groupe sanguin -->
+      <p *ngIf="patient.groupeSanguin">
+        <strong>Groupe :</strong>
+        <span [ngSwitch]="patient.groupeSanguin">
+          <ng-container *ngSwitchCase="'O-'">O⁻ — Donneur universel</ng-container>
+          <ng-container *ngSwitchCase="'AB+'">AB⁺ — Receveur universel</ng-container>
+          <ng-container *ngSwitchDefault>{{ patient.groupeSanguin }}</ng-container>
+        </span>
+      </p>
+    </div>
+
+    <!-- Module 5: *ngIf — Allergies -->
+    <div class="medical-info" *ngIf="patient.allergies.length > 0">
+      <div class="allergies-indicator">
+        <span class="allergy-icon">⚠️</span>
+        <span>{{ patient.allergies.length }} allergie(s) connue(s)</span>
+      </div>
+    </div>
+
+    <!-- Statut -->
+    <div class="statut">
+      <span class="statut-label">Statut :</span>
+      <span [class]="'statut-' + patient.statut">{{ patient.statut }}</span>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="card-actions">
+    <!-- Module 7: routerLink vers détail patient -->
+    <a class="btn-dossier"
+       [routerLink]="['/patients', patient.id]"
+       (click)="$event.stopPropagation()">
+      📋 Dossier
+    </a>
+
+    <!-- Module 4: Event Binding + stopPropagation -->
+    <button class="btn-urgence"
+            (click)="$event.stopPropagation(); signalerUrgence('Urgence signalée depuis la carte patient')">
+      🚨 URGENCE
+    </button>
+  </div>
+</div>

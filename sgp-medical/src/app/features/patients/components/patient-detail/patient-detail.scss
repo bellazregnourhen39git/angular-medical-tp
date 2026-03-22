@@ -1,0 +1,339 @@
+.patient-detail {
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+
+    h1 {
+      flex: 1;
+      color: #2c3e50;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .btn-retour {
+      background: transparent;
+      border: none;
+      color: #007bff;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-right: 1rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .actions {
+      .btn-primary {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background: #218838;
+        }
+      }
+    }
+  }
+
+  /* Onglets */
+  .onglets {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0;
+
+    .onglet {
+      background: transparent;
+      border: none;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: #333;
+      }
+
+      &.actif {
+        color: #007bff;
+        border-bottom-color: #007bff;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .onglets-contenu {
+    margin-bottom: 2rem;
+
+    .onglet-content {
+      animation: fadeIn 0.3s ease;
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  /* Sections */
+  .section {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    h3 {
+      color: #2c3e50;
+      font-size: 1.3rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 0.5rem;
+    }
+
+    /* Description list */
+    dl {
+      margin: 0;
+
+      dt {
+        font-weight: 600;
+        color: #34495e;
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+      }
+
+      dd {
+        margin: 0 0 1rem 0;
+        color: #555;
+        padding-left: 1rem;
+        border-left: 3px solid #e0e0e0;
+      }
+    }
+  }
+
+  .sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+
+    .section {
+      margin-bottom: 0;
+      background: #f9f9f9;
+    }
+  }
+
+  /* Constantes vitales */
+  .constantes-table {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      tr {
+        border-bottom: 1px solid #ddd;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 0.75rem;
+
+          &:first-child {
+            font-weight: 600;
+            width: 40%;
+          }
+
+          &.value {
+            text-align: right;
+            color: #2c3e50;
+            font-family: monospace;
+
+            &.critique {
+              color: #e74c3c;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Allergies */
+  .allergies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+
+    .allergie-item {
+      border-left: 4px solid #f39c12;
+      padding: 1rem;
+      background: #fffbf0;
+      border-radius: 4px;
+
+      &.severite-sévère {
+        border-left-color: #e74c3c;
+        background: #ffe6e6;
+
+        .badge-sévère {
+          background: #e74c3c;
+        }
+      }
+
+      &.severite-modérée {
+        border-left-color: #f39c12;
+        background: #fff9e6;
+
+        .badge-modérée {
+          background: #f39c12;
+        }
+      }
+
+      &.severite-légère {
+        border-left-color: #27ae60;
+        background: #e6f7f0;
+
+        .badge-légère {
+          background: #27ae60;
+        }
+      }
+
+      h4 {
+        margin: 0 0 0.5rem 0;
+        color: #2c3e50;
+      }
+
+      p {
+        margin: 0.25rem 0;
+        font-size: 0.9rem;
+
+        strong {
+          color: #34495e;
+        }
+
+        span {
+          color: white;
+          padding: 2px 6px;
+          border-radius: 3px;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+
+  /* Listes */
+  .antecedents-list,
+  .traitements-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 0.75rem 1rem;
+      border-left: 3px solid #3498db;
+      margin-bottom: 0.5rem;
+      background: #f0f8ff;
+      color: #2c3e50;
+
+      &::before {
+        content: '✓ ';
+        color: #27ae60;
+        font-weight: bold;
+      }
+    }
+  }
+
+  /* Messages */
+  .info {
+    padding: 1rem;
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    color: #1976d2;
+    margin: 0;
+    border-radius: 4px;
+  }
+
+  /* Statuts */
+  .statut-actif {
+    color: #27ae60;
+    font-weight: bold;
+  }
+
+  .statut-inactif {
+    color: #7f8c8d;
+  }
+
+  .statut-décédé {
+    color: #e74c3c;
+  }
+
+  .statut-transféré {
+    color: #3498db;
+  }
+
+  /* Badges urgence */
+  .badge-vert {
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  .badge-jaune {
+    background: #f39c12;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  .badge-orange {
+    background: #e67e22;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  .badge-rouge {
+    background: #e74c3c;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+}
+
+.patient-not-found {
+  text-align: center;
+  padding: 3rem;
+  background: #fff3cd;
+  border-radius: 8px;
+  color: #856404;
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+
+    a {
+      color: #004085;
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,208 @@
+<div class="patient-detail" *ngIf="patient">
+  <div class="detail-header">
+    <button class="btn-retour" (click)="retourner()">← Retour à la liste</button>
+    <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
+    <div class="actions">
+      <button class="btn-primary" (click)="modifierPatient()">Modifier</button>
+    </div>
+  </div>
+
+  <!-- Navigation par onglets -->
+  <nav class="onglets">
+    <button 
+      class="onglet"
+      [class.actif]="ongletActif === 'dossier'"
+      (click)="changerOnglet('dossier')"
+    >
+      📋 Dossier
+    </button>
+    <button 
+      class="onglet"
+      [class.actif]="ongletActif === 'constantes'"
+      (click)="changerOnglet('constantes')"
+    >
+      📊 Constantes vitales
+    </button>
+    <button 
+      class="onglet"
+      [class.actif]="ongletActif === 'allergies'"
+      (click)="changerOnglet('allergies')"
+    >
+      ⚠️ Allergies
+    </button>
+    <button 
+      class="onglet"
+      [class.actif]="ongletActif === 'consultations'"
+      (click)="changerOnglet('consultations')"
+    >
+      🏥 Consultations
+    </button>
+  </nav>
+
+  <!-- Contenu des onglets -->
+  <div class="onglets-contenu">
+    
+    <!-- Onglet Dossier -->
+    <div class="onglet-content" *ngIf="ongletActif === 'dossier'">
+      <app-patient-card 
+        [patient]="patient" 
+        [showSensitiveData]="true"
+        (patientSelected)="modifierPatient()"
+      ></app-patient-card>
+
+      <div class="sections">
+        <section class="section">
+          <h3>Informations Personnelles</h3>
+          <dl>
+            <dt>Nom:</dt>
+            <dd>{{ patient.nom }}</dd>
+            
+            <dt>Prénom:</dt>
+            <dd>{{ patient.prenom }}</dd>
+            
+            <dt>Date de naissance:</dt>
+            <dd>{{ patient.dateNaissance | date: 'dd/MM/yyyy' }}</dd>
+            
+            <dt>Sexe:</dt>
+            <dd>{{ patient.sexe === 'M' ? 'Masculin' : patient.sexe === 'F' ? 'Féminin' : 'Non spécifié' }}</dd>
+            
+            <dt>Groupe sanguin:</dt>
+            <dd>{{ patient.groupeSanguin || 'Non connu' }}</dd>
+          </dl>
+        </section>
+
+        <section class="section">
+          <h3>Coordonnées</h3>
+          <dl>
+            <dt>Téléphone:</dt>
+            <dd>{{ patient.telephone }}</dd>
+            
+            <dt>Email:</dt>
+            <dd>{{ patient.email || 'Non renseigné' }}</dd>
+            
+            <dt>Adresse:</dt>
+            <dd>
+              {{ patient.adresse.ligne1 }}<br>
+              <span *ngIf="patient.adresse.ligne2">{{ patient.adresse.ligne2 }}<br></span>
+              {{ patient.adresse.codePostal }} {{ patient.adresse.ville }}<br>
+              {{ patient.adresse.pays }}
+            </dd>
+          </dl>
+        </section>
+
+        <section class="section">
+          <h3>Données Médicales</h3>
+          <dl>
+            <dt>Statut:</dt>
+            <dd [class]="'statut-' + patient.statut">{{ patient.statut }}</dd>
+            
+            <dt>Niveau d'urgence:</dt>
+            <dd>
+              <span [ngSwitch]="patient.niveauUrgence">
+                <span *ngSwitchCase="'vert'" class="badge-vert">🟢 Vert (CCMU 1)</span>
+                <span *ngSwitchCase="'jaune'" class="badge-jaune">🟡 Jaune (CCMU 2)</span>
+                <span *ngSwitchCase="'orange'" class="badge-orange">🟠 Orange (CCMU 3)</span>
+                <span *ngSwitchCase="'rouge'" class="badge-rouge">🔴 Rouge (CCMU 4/5)</span>
+              </span>
+            </dd>
+            
+            <dt>Médecin traitant:</dt>
+            <dd>{{ patient.medecinTraitantId }}</dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+
+    <!-- Onglet Constantes vitales -->
+    <div class="onglet-content" *ngIf="ongletActif === 'constantes'">
+      <section class="section">
+        <h3>Dernières Constantes Vitales</h3>
+        <div *ngIf="patient.dernieresConstantes; else sansConstantes" class="constantes-table">
+          <table>
+            <tr>
+              <td>Tension artérielle:</td>
+              <td class="value">{{ patient.dernieresConstantes.tensionSystolique }}/{{ patient.dernieresConstantes.tensionDiastolique }} mmHg</td>
+            </tr>
+            <tr>
+              <td>Fréquence cardiaque:</td>
+              <td class="value">{{ patient.dernieresConstantes.frequenceCardiaque }} bpm</td>
+            </tr>
+            <tr>
+              <td>Température:</td>
+              <td class="value">{{ patient.dernieresConstantes.temperature }} °C</td>
+            </tr>
+            <tr>
+              <td>Saturation O₂:</td>
+              <td class="value" [class.critique]="patient.dernieresConstantes.saturationO2! < 90">
+                {{ patient.dernieresConstantes.saturationO2 }} %
+              </td>
+            </tr>
+            <tr>
+              <td>Poids:</td>
+              <td class="value">{{ patient.dernieresConstantes.poids }} kg</td>
+            </tr>
+            <tr>
+              <td>Taille:</td>
+              <td class="value">{{ patient.dernieresConstantes.taille }} cm</td>
+            </tr>
+            <tr>
+              <td>Date de mesure:</td>
+              <td class="value">{{ patient.dernieresConstantes.dateMesure | date: 'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          </table>
+        </div>
+        <ng-template #sansConstantes>
+          <p class="info">Aucune constante vitale enregistrée</p>
+        </ng-template>
+      </section>
+    </div>
+
+    <!-- Onglet Allergies -->
+    <div class="onglet-content" *ngIf="ongletActif === 'allergies'">
+      <section class="section">
+        <h3>Allergies et Intolerances</h3>
+        <div *ngIf="patient.allergies.length > 0; else sansAllergies" class="allergies-list">
+          <div class="allergie-item" *ngFor="let allergie of patient.allergies" [class]="'severite-' + allergie.severite">
+            <h4>{{ allergie.substance }}</h4>
+            <p><strong>Reaction:</strong> {{ allergie.reaction }}</p>
+            <p><strong>Severite:</strong> 
+              <span [class]="'badge-' + allergie.severite">{{ allergie.severite }}</span>
+            </p>
+            <p><strong>Declaree le:</strong> {{ allergie.dateDeclaration | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+        <ng-template #sansAllergies>
+          <p class="info">Aucune allergie déclarée</p>
+        </ng-template>
+      </section>
+    </div>
+
+    <!-- Onglet Consultations -->
+    <div class="onglet-content" *ngIf="ongletActif === 'consultations'">
+      <section class="section">
+        <h3>Historique des Consultations</h3>
+        <p class="info">Cette section sera implémentée avec le module Consultations</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- Antécédents -->
+  <div class="section" *ngIf="patient.antecedents.length > 0">
+    <h3>Antécédents Médicaux</h3>
+    <ul class="antecedents-list">
+      <li *ngFor="let antecedent of patient.antecedents">{{ antecedent }}</li>
+    </ul>
+  </div>
+
+  <!-- Traitements en cours -->
+  <div class="section" *ngIf="patient.traitementEnCours.length > 0">
+    <h3>Traitements en Cours</h3>
+    <ul class="traitements-list">
+      <li *ngFor="let traitement of patient.traitementEnCours">{{ traitement }}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="patient-not-found" *ngIf="!patient">
+  <p>Patient introuvable. <a href="/patients">Retour à la liste</a></p>
+</div>

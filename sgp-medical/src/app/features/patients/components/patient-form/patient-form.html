@@ -1,0 +1,390 @@
+<div class="patient-form">
+  <h2>{{ modeEdition ? 'Modifier le patient' : 'Créer un nouveau patient' }}</h2>
+  
+  <form [formGroup]="patientForm" (ngSubmit)="onSoumettre()" novalidate class="form-patient">
+    
+    <!-- Section Identité -->
+    <fieldset class="form-section">
+      <legend>Identité</legend>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">Nom *</label>
+          <input 
+            id="nom" 
+            type="text" 
+            formControlName="nom" 
+            placeholder="Dupont"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('nom')?.invalid && patientForm.get('nom')?.touched"
+          />
+          <div class="error-message" *ngIf="patientForm.get('nom')?.invalid && patientForm.get('nom')?.touched">
+            <span *ngIf="patientForm.get('nom')?.errors?.['required']">Le nom est obligatoire</span>
+            <span *ngIf="patientForm.get('nom')?.errors?.['minlength']">Minimum 2 caractères</span>
+            <span *ngIf="patientForm.get('nom')?.errors?.['pattern']">Caractères valides uniquement</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom *</label>
+          <input 
+            id="prenom" 
+            type="text" 
+            formControlName="prenom" 
+            placeholder="Jean"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('prenom')?.invalid && patientForm.get('prenom')?.touched"
+          />
+          <div class="error-message" *ngIf="patientForm.get('prenom')?.invalid && patientForm.get('prenom')?.touched">
+            <span *ngIf="patientForm.get('prenom')?.errors?.['required']">Le prénom est obligatoire</span>
+            <span *ngIf="patientForm.get('prenom')?.errors?.['minlength']">Minimum 2 caractères</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateNaissance">Date de naissance *</label>
+          <input 
+            id="dateNaissance" 
+            type="date" 
+            formControlName="dateNaissance"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('dateNaissance')?.invalid && patientForm.get('dateNaissance')?.touched"
+          />
+          <div class="error-message" *ngIf="patientForm.get('dateNaissance')?.invalid && patientForm.get('dateNaissance')?.touched">
+            <span *ngIf="patientForm.get('dateNaissance')?.errors?.['required']">La date est obligatoire</span>
+            <span *ngIf="patientForm.get('dateNaissance')?.errors?.['dateAvenir']">La date doit être dans le passé</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sexe">Sexe *</label>
+          <select 
+            id="sexe"
+            formControlName="sexe"
+            class="form-control"
+          >
+            <option value="M">Masculin</option>
+            <option value="F">Féminin</option>
+            <option value="I">Indéterminé</option>
+            <option value="U">Non connu</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ins">INS (Identité Nationale de Santé) *</label>
+          <input 
+            id="ins"
+            type="text" 
+            formControlName="ins" 
+            placeholder="1850612075047"
+            maxlength="13"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('ins')?.invalid && patientForm.get('ins')?.touched"
+          />
+          <small>Format: 13 chiffres, commençant par 1 ou 2</small>
+          <div class="error-message" *ngIf="patientForm.get('ins')?.invalid && patientForm.get('ins')?.touched">
+            <span *ngIf="patientForm.get('ins')?.errors?.['required']">L'INS est obligatoire</span>
+            <span *ngIf="patientForm.get('ins')?.errors?.['pattern']">Format invalide (13 chiffres, commençant par 1 ou 2)</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="groupeSanguin">Groupe sanguin</label>
+          <select 
+            id="groupeSanguin"
+            formControlName="groupeSanguin"
+            class="form-control"
+          >
+            <option value="">Non connu</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Section Coordonnées -->
+    <fieldset class="form-section">
+      <legend>Coordonnées</legend>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="telephone">Téléphone *</label>
+          <input 
+            id="telephone"
+            type="tel" 
+            formControlName="telephone" 
+            placeholder="0612345678"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('telephone')?.invalid && patientForm.get('telephone')?.touched"
+          />
+          <small>Format: 0X XX XX XX XX</small>
+          <div class="error-message" *ngIf="patientForm.get('telephone')?.invalid && patientForm.get('telephone')?.touched">
+            <span *ngIf="patientForm.get('telephone')?.errors?.['required']">Le téléphone est obligatoire</span>
+            <span *ngIf="patientForm.get('telephone')?.errors?.['pattern']">Format invalide</span>
+          </div>
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="email">Email</label>
+          <input 
+            id="email"
+            type="email" 
+            formControlName="email" 
+            placeholder="jean@example.com"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('email')?.invalid && patientForm.get('email')?.touched"
+          />
+          <div class="error-message" *ngIf="patientForm.get('email')?.invalid && patientForm.get('email')?.touched">
+            <span *ngIf="patientForm.get('email')?.errors?.['email']">Email invalide</span>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Section Adresse -->
+    <fieldset class="form-section" formGroupName="adresse">
+      <legend>Adresse</legend>
+
+      <div class="form-group">
+        <label for="ligne1">Adresse *</label>
+        <input 
+          id="ligne1"
+          type="text" 
+          formControlName="ligne1" 
+          placeholder="15 rue de la Santé"
+          class="form-control"
+          [class.is-invalid]="patientForm.get('adresse.ligne1')?.invalid && patientForm.get('adresse.ligne1')?.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="ligne2">Complément d'adresse</label>
+        <input 
+          id="ligne2"
+          type="text" 
+          formControlName="ligne2" 
+          placeholder="Apt 42"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="codePostal">Code postal *</label>
+          <input 
+            id="codePostal"
+            type="text" 
+            formControlName="codePostal" 
+            placeholder="75001"
+            maxlength="5"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('adresse.codePostal')?.invalid && patientForm.get('adresse.codePostal')?.touched"
+          />
+          <div class="error-message" *ngIf="patientForm.get('adresse.codePostal')?.invalid && patientForm.get('adresse.codePostal')?.touched">
+            <span *ngIf="patientForm.get('adresse.codePostal')?.errors?.['pattern']">Format invalide (5 chiffres)</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ville">Ville *</label>
+          <input 
+            id="ville"
+            type="text" 
+            formControlName="ville" 
+            placeholder="Paris"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('adresse.ville')?.invalid && patientForm.get('adresse.ville')?.touched"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="pays">Pays *</label>
+          <input 
+            id="pays"
+            type="text" 
+            formControlName="pays" 
+            placeholder="France"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Section Medical -->
+    <fieldset class="form-section">
+      <legend>Données Médicales</legend>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="medecinTraitantId">Médecin traitant *</label>
+          <input 
+            id="medecinTraitantId"
+            type="text" 
+            formControlName="medecinTraitantId" 
+            placeholder="med001"
+            class="form-control"
+            [class.is-invalid]="patientForm.get('medecinTraitantId')?.invalid && patientForm.get('medecinTraitantId')?.touched"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="statut">Statut *</label>
+          <select 
+            id="statut"
+            formControlName="statut"
+            class="form-control"
+          >
+            <option value="actif">Actif</option>
+            <option value="inactif">Inactif</option>
+            <option value="décédé">Décédé</option>
+            <option value="transféré">Transféré</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="niveauUrgence">Niveau d'urgence</label>
+          <select 
+            id="niveauUrgence"
+            formControlName="niveauUrgence"
+            class="form-control"
+          >
+            <option value="vert">Vert (CCMU 1) - Stable</option>
+            <option value="jaune">Jaune (CCMU 2) - Peu grave</option>
+            <option value="orange">Orange (CCMU 3) - Grave</option>
+            <option value="rouge">Rouge (CCMU 4/5) - URGENT</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Antécédents -->
+    <fieldset class="form-section">
+      <legend>Antécédents Médicaux</legend>
+      
+      <div formArrayName="antecedents" class="array-items">
+        <div *ngFor="let antecedent of antecedents.controls; let i = index" class="array-item">
+          <input 
+            [formControlName]="i"
+            type="text"
+            placeholder="Ex: Diabète type 2, Hypertension"
+            class="form-control"
+            [class.is-invalid]="antecedent.invalid && antecedent.touched"
+          />
+          <button 
+            type="button" 
+            class="btn-danger"
+            (click)="supprimerAntecedent(i)"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+      
+      <button 
+        type="button" 
+        class="btn-secondary"
+        (click)="ajouterAntecedent()"
+      >
+        + Ajouter un antécédent
+      </button>
+    </fieldset>
+
+    <!-- Allergies -->
+    <fieldset class="form-section">
+      <legend>Allergies et Intolerances</legend>
+      
+      <div formArrayName="allergies" class="allergie-items">
+        <div *ngFor="let allergie of allergies.controls; let i = index" [formGroupName]="i" class="allergie-item">
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Substance *</label>
+              <input 
+                formControlName="substance"
+                type="text"
+                placeholder="Ex: Pénicilline"
+                class="form-control"
+                [class.is-invalid]="allergie.get('substance')?.invalid && allergie.get('substance')?.touched"
+              />
+            </div>
+
+            <div class="form-group flex-1">
+              <label>Réaction *</label>
+              <input 
+                formControlName="reaction"
+                type="text"
+                placeholder="Ex: Urticaire, OĠdème"
+                class="form-control"
+                [class.is-invalid]="allergie.get('reaction')?.invalid && allergie.get('reaction')?.touched"
+              />
+              <div class="error-message" *ngIf="allergie.get('reaction')?.invalid && allergie.get('reaction')?.touched">
+                <span *ngIf="allergie.get('reaction')?.errors?.['required']">La réaction est obligatoire</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Sévérité *</label>
+              <select 
+                formControlName="severite"
+                class="form-control"
+              >
+                <option value="legere">Légère</option>
+                <option value="moderee">Modérée</option>
+                <option value="severe">Sévère</option>
+              </select>
+            </div>
+
+            <button 
+              type="button" 
+              class="btn-danger"
+              (click)="supprimerAllergie(i)"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <button 
+        type="button" 
+        class="btn-secondary"
+        (click)="ajouterAllergie()"
+      >
+        + Ajouter une allergie
+      </button>
+    </fieldset>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn-primary"
+        [disabled]="patientForm.invalid"
+      >
+        {{ modeEdition ? 'Enregistrer les modifications' : 'Créer le patient' }}
+      </button>
+      <button 
+        type="button" 
+        class="btn-secondary"
+        (click)="annuler()"
+      >
+        Annuler
+      </button>
+    </div>
+
+    <!-- Afficher les erreurs globales du formulaire -->
+    <div class="form-summary" *ngIf="patientForm.invalid && patientForm.touched">
+      <p class="warning">Veuillez remplir tous les champs obligatoires (*)</p>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,91 @@
+<section class="dashboard">
+  <div class="page-header">
+    <h1>📊 Tableau de bord clinique</h1>
+    <p>Vue d'ensemble de l'activité médicale</p>
+  </div>
+
+  <div class="kpi-grid">
+    <article class="kpi">
+      <div class="kpi-icon">👥</div>
+      <h3>Total Patients</h3>
+      <p class="kpi-value">{{ stats.totalPatients }}</p>
+      <span class="kpi-subtitle">Patients enregistrés</span>
+    </article>
+
+    <article class="kpi urgence-rouge">
+      <div class="kpi-icon">🔴</div>
+      <h3>Urgences Rouges</h3>
+      <p class="kpi-value">{{ stats.urgencesRouges }}</p>
+      <span class="kpi-subtitle">Critique</span>
+    </article>
+
+    <article class="kpi urgence-orange">
+      <div class="kpi-icon">🟠</div>
+      <h3>Urgences Oranges</h3>
+      <p class="kpi-value">{{ stats.urgencesOranges }}</p>
+      <span class="kpi-subtitle">Haute priorité</span>
+    </article>
+
+    <article class="kpi">
+      <div class="kpi-icon">📋</div>
+      <h3>Consultations Aujourd'hui</h3>
+      <p class="kpi-value">{{ stats.consultationsAujourdhui }}</p>
+      <span class="kpi-subtitle">Prévues</span>
+    </article>
+
+    <article class="kpi">
+      <div class="kpi-icon">💊</div>
+      <h3>Ordonnances Pendantes</h3>
+      <p class="kpi-value">{{ stats.ordonnancesPendantes }}</p>
+      <span class="kpi-subtitle">En attente de validation</span>
+    </article>
+
+    <article class="kpi">
+      <div class="kpi-icon">👨‍⚕️</div>
+      <h3>Médecins Actifs</h3>
+      <p class="kpi-value">{{ stats.medecinsActifs }}</p>
+      <span class="kpi-subtitle">En ligne</span>
+    </article>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Occupation des services</h3>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width]="stats.tauxOccupation + '%'"></div>
+      </div>
+      <p class="chart-label">{{ stats.tauxOccupation }}% des lits occupés</p>
+    </div>
+
+    <div class="chart-card">
+      <h3>Distribution des urgences</h3>
+      <div class="urgence-breakdown">
+        <div class="urgence-item rouge">
+          <span>Rouges</span>
+          <span class="percent">{{ stats.urgencesRouges }}%</span>
+        </div>
+        <div class="urgence-item orange">
+          <span>Oranges</span>
+          <span class="percent">{{ stats.urgencesOranges }}%</span>
+        </div>
+        <div class="urgence-item autre">
+          <span>Autres</span>
+          <span class="percent">{{ 100 - stats.urgencesRouges - stats.urgencesOranges }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alerts-section">
+    <h3>⚠️ Alertes importantes</h3>
+    <div *ngIf="stats.ordonnancesPendantes > 0" class="alert alert-warning">
+      <strong>{{ stats.ordonnancesPendantes }}</strong> ordonnances en attente de validation
+    </div>
+    <div *ngIf="stats.urgencesRouges > 0" class="alert alert-danger">
+      <strong>{{ stats.urgencesRouges }}</strong> patients en urgence critique
+    </div>
+    <div *ngIf="stats.urgencesRouges === 0 && stats.ordonnancesPendantes === 0" class="alert alert-info">
+      ✓ Tous les dossiers à jour
+    </div>
+  </div>
+</section>
